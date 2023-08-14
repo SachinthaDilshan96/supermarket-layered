@@ -78,12 +78,30 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public String updateCustomer(CustomerDto customer) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        CustomerEntity customerEntity = new CustomerEntity(
+                customer.getId(),
+                customer.getTitle(),
+                customer.getName(),
+                customer.getDob(),
+                customer.getSalary(),
+                customer.getAddress(),
+                customer.getCity(),
+                customer.getProvince(),
+                customer.getZip());
+        if(customerDao.update(customerEntity)){
+            return "Customer Updated Successfully";
+        }else{
+            return "Customer Update Failed";
+        }
     }
 
     @Override
     public String deleteCustomer(String customerId) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+          if(customerDao.delete(customerId)){
+              return "Customer Deleted Successfully";
+          }else{
+              return "Customer Deletion Failed";
+          }  
     }
 
     @Override

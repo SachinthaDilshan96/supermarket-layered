@@ -17,6 +17,7 @@ import supermarket.layered.dto.CustomerDto;
 public class CustomerPanel extends javax.swing.JPanel {
 
     CustomerController customerController;
+
     /**
      * Creates new form CustomerView
      */
@@ -266,12 +267,12 @@ public class CustomerPanel extends javax.swing.JPanel {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        
+            deleteCustomer();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        
+        updateCustomer();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -280,8 +281,8 @@ public class CustomerPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void tblCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCustomerMouseClicked
-            // TODO add your handling code here:
-       loadToForm();
+        // TODO add your handling code here:
+        loadToForm();
     }//GEN-LAST:event_tblCustomerMouseClicked
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -320,35 +321,57 @@ public class CustomerPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void addCustomer() {
-       try{
-          String result = customerController.addCustomer(new CustomerDto(
-                txtCustomerId.getText(),
-                cmbTitle.getSelectedItem().toString(),
-                txtName.getText(),
-                txtDob.getText(),
-                Double.parseDouble(txtSalary.getText()),
-                txtAddress.getText(),
-                txtCity.getText(),
-                txtProvince.getText(),
-                txtZip.getText()));
-           JOptionPane.showMessageDialog(this, result);
-           clearFields();
-           loadLastId();
-           loadAllCustomers();
-       }catch(Exception e){
-           JOptionPane.showMessageDialog(this, e.getMessage());
-       }
+        try {
+            String result = customerController.addCustomer(new CustomerDto(
+                    txtCustomerId.getText(),
+                    cmbTitle.getSelectedItem().toString(),
+                    txtName.getText(),
+                    txtDob.getText(),
+                    Double.parseDouble(txtSalary.getText()),
+                    txtAddress.getText(),
+                    txtCity.getText(),
+                    txtProvince.getText(),
+                    txtZip.getText()));
+            JOptionPane.showMessageDialog(this, result);
+            clearFields();
+            loadLastId();
+            loadAllCustomers();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }
-    
-    public void updateCustomer(){
-        
+
+    public void updateCustomer() {
+        try {
+            String result = customerController.updateCustomer(new CustomerDto(
+                    txtCustomerId.getText(),
+                    cmbTitle.getSelectedItem().toString(),
+                    txtName.getText(),
+                    txtDob.getText(),
+                    Double.parseDouble(txtSalary.getText()),
+                    txtAddress.getText(),
+                    txtCity.getText(),
+                    txtProvince.getText(),
+                    txtZip.getText()));
+            JOptionPane.showMessageDialog(this, result);
+            loadAllCustomers();
+            clearFields();
+            loadLastId();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Customer update Failed");
+        }
     }
-    
-    public void deleteCustomer(){
-        
+
+    public void deleteCustomer() {
+            try{
+                String result = customerController.deleteCustomer(txtCustomerId.getText());
+                JOptionPane.showMessageDialog(this, result);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
     }
-    
-    public void loadAllCustomers(){
+
+    public void loadAllCustomers() {
         try {
             String[] columns = {"id", "Name", "Address", "Salary", "ZIP"};
             DefaultTableModel dtm = new DefaultTableModel(columns, 0) {
@@ -375,12 +398,12 @@ public class CustomerPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
-    
-    private void loadToForm(){
+
+    private void loadToForm() {
         try {
             String custId = tblCustomer.getValueAt(tblCustomer.getSelectedRow(), 0).toString();
             CustomerDto customerDto = customerController.getCustomer(custId);
-            if(customerDto!=null){
+            if (customerDto != null) {
                 txtCustomerId.setText(customerDto.getId());
                 cmbTitle.setSelectedItem(customerDto.getTitle());
                 txtName.setText(customerDto.getName());
@@ -390,24 +413,24 @@ public class CustomerPanel extends javax.swing.JPanel {
                 txtCity.setText(customerDto.getCity());
                 txtProvince.setText(customerDto.getProvince());
                 txtZip.setText(customerDto.getZip());
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Customer Not found");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
-    
-    private void loadLastId(){
-        try{
+
+    private void loadLastId() {
+        try {
             txtCustomerId.setText(customerController.getLastId());
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(this, "CustomerID retrieval failed. Please try again");
         }
     }
-    
-    private void clearFields(){
+
+    private void clearFields() {
         txtCustomerId.setText("");
         cmbTitle.setSelectedIndex(0);
         txtName.setText("");
@@ -417,6 +440,6 @@ public class CustomerPanel extends javax.swing.JPanel {
         txtCity.setText("");
         txtProvince.setText("");
         txtZip.setText("");
-                
+
     }
 }
