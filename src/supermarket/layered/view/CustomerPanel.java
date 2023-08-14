@@ -4,17 +4,27 @@
  */
 package supermarket.layered.view;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import supermarket.layered.controller.CustomerController;
+import supermarket.layered.dto.CustomerDto;
+
 /**
  *
  * @author sachinthadilshan
  */
 public class CustomerPanel extends javax.swing.JPanel {
 
+    CustomerController customerController;
     /**
      * Creates new form CustomerView
      */
     public CustomerPanel() {
+        customerController = new CustomerController();
         initComponents();
+        loadLastId();
+        loadAllCustomers();
     }
 
     /**
@@ -27,30 +37,386 @@ public class CustomerPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtCustomerId = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtDob = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtSalary = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtAddress = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtCity = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtProvince = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtZip = new javax.swing.JTextField();
+        cmbTitle = new javax.swing.JComboBox<>();
+        btnDelete = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblCustomer = new javax.swing.JTable();
+        btnClear = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel1.setText("Customer Section");
+
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel2.setText("Customer Id");
+
+        txtCustomerId.setEditable(false);
+        txtCustomerId.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        txtCustomerId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCustomerIdActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel3.setText("Customer Title");
+
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel4.setText("Customer Name");
+
+        txtName.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel5.setText("Customer DOB");
+
+        txtDob.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel6.setText("Customer Salary");
+
+        txtSalary.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+
+        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel7.setText("Customer Address");
+
+        txtAddress.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+
+        jLabel8.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel8.setText("Customer City");
+
+        txtCity.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel9.setText("Customer Province");
+
+        txtProvince.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+
+        jLabel10.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel10.setText("Customer Zip");
+
+        txtZip.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+
+        cmbTitle.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mr", "Ms", "Mrs", "Dr", "Other" }));
+
+        btnDelete.setText("Delete Customer");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setText("Update Customer");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnSave.setText("Save Customer");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        tblCustomer.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblCustomer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCustomerMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblCustomer);
+
+        btnClear.setText("Clear all fields");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(299, 299, 299)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addGap(83, 83, 83)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(54, 54, 54)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnDelete)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnUpdate)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCustomerId)
+                                .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                                .addComponent(txtDob, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                                .addComponent(txtSalary, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                                .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                                .addComponent(txtCity, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                                .addComponent(txtProvince, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                                .addComponent(txtZip, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                                .addComponent(cmbTitle, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSave)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnClear))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(720, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtCustomerId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cmbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtDob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtProvince, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtZip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDelete)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnSave)
+                    .addComponent(btnClear))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtCustomerIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustomerIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCustomerIdActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        addCustomer();
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void tblCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCustomerMouseClicked
+            // TODO add your handling code here:
+       loadToForm();
+    }//GEN-LAST:event_tblCustomerMouseClicked
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        clearFields();
+        loadLastId();
+    }//GEN-LAST:event_btnClearActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cmbTitle;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblCustomer;
+    private javax.swing.JTextField txtAddress;
+    private javax.swing.JTextField txtCity;
+    private javax.swing.JTextField txtCustomerId;
+    private javax.swing.JTextField txtDob;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtProvince;
+    private javax.swing.JTextField txtSalary;
+    private javax.swing.JTextField txtZip;
     // End of variables declaration//GEN-END:variables
+
+    public void addCustomer() {
+       try{
+          String result = customerController.addCustomer(new CustomerDto(
+                txtCustomerId.getText(),
+                cmbTitle.getSelectedItem().toString(),
+                txtName.getText(),
+                txtDob.getText(),
+                Double.parseDouble(txtSalary.getText()),
+                txtAddress.getText(),
+                txtCity.getText(),
+                txtProvince.getText(),
+                txtZip.getText()));
+           JOptionPane.showMessageDialog(this, result);
+           clearFields();
+           loadLastId();
+           loadAllCustomers();
+       }catch(Exception e){
+           JOptionPane.showMessageDialog(this, e.getMessage());
+       }
+    }
+    
+    public void updateCustomer(){
+        
+    }
+    
+    public void deleteCustomer(){
+        
+    }
+    
+    public void loadAllCustomers(){
+        try {
+            String[] columns = {"id", "Name", "Address", "Salary", "ZIP"};
+            DefaultTableModel dtm = new DefaultTableModel(columns, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            tblCustomer.setModel(dtm);
+
+            ArrayList<CustomerDto> customers = customerController.getAllCustomers();
+
+            for (CustomerDto customer : customers) {
+                Object[] rowData = {
+                    customer.getId(),
+                    customer.getTitle() + " " + customer.getName(),
+                    customer.getAddress(),
+                    customer.getSalary(),
+                    customer.getZip()
+                };
+                dtm.addRow(rowData);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+    
+    private void loadToForm(){
+        try {
+            String custId = tblCustomer.getValueAt(tblCustomer.getSelectedRow(), 0).toString();
+            CustomerDto customerDto = customerController.getCustomer(custId);
+            if(customerDto!=null){
+                txtCustomerId.setText(customerDto.getId());
+                cmbTitle.setSelectedItem(customerDto.getTitle());
+                txtName.setText(customerDto.getName());
+                txtDob.setText(customerDto.getDob());
+                txtSalary.setText(Double.toString(customerDto.getSalary()));
+                txtAddress.setText(customerDto.getAddress());
+                txtCity.setText(customerDto.getCity());
+                txtProvince.setText(customerDto.getProvince());
+                txtZip.setText(customerDto.getZip());
+            }else{
+                JOptionPane.showMessageDialog(this, "Customer Not found");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+    
+    private void loadLastId(){
+        try{
+            txtCustomerId.setText(customerController.getLastId());
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(this, "CustomerID retrieval failed. Please try again");
+        }
+    }
+    
+    private void clearFields(){
+        txtCustomerId.setText("");
+        cmbTitle.setSelectedIndex(0);
+        txtName.setText("");
+        txtDob.setText("");
+        txtSalary.setText("");
+        txtAddress.setText("");
+        txtCity.setText("");
+        txtProvince.setText("");
+        txtZip.setText("");
+                
+    }
 }
