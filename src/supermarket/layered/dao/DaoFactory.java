@@ -4,6 +4,7 @@
  */
 package supermarket.layered.dao;
 
+import supermarket.layered.dao.custom.impl.ItemDaoImpl;
 import supermarket.layered.dao.custom.impl.CustomerDaoImpl;
 
 /**
@@ -29,12 +30,14 @@ public class DaoFactory {
         switch (daoType) {
             case CUSTOMER:
                 return new CustomerDaoImpl();
+            case ITEM:
+                return new ItemDaoImpl();
             default:
                 return null;
         }
     }
 
     public enum DaoType {
-        CUSTOMER,
+        CUSTOMER,ITEM
     }
 }
