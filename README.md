@@ -1,4 +1,4 @@
-# supermarket-layered
+<h1 align="center">SuperMarket App</h1>
 This project has been beuild using JavaSE, Swing, JDBC and MySql. The projects follows the layered architecture. The system can perform following operations. 
 
 #Snapshots of the system
