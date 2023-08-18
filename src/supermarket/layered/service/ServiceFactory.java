@@ -6,6 +6,8 @@ package supermarket.layered.service;
 
 import supermarket.layered.service.custom.impl.CustomerServiceImpl;
 import supermarket.layered.service.custom.impl.ItemServiceImpl;
+import supermarket.layered.service.custom.impl.OrderDetailServiceImpl;
+import supermarket.layered.service.custom.impl.OrderServiceImpl;
 
 /**
  *
@@ -31,6 +33,10 @@ public class ServiceFactory {
                return new CustomerServiceImpl();
             case ITEM:
                 return new ItemServiceImpl();
+            case ORDER:
+                return new OrderServiceImpl();
+            case ORDER_DETAIL:
+                return new OrderDetailServiceImpl();
             default:
                 return null;
                 
@@ -38,6 +44,6 @@ public class ServiceFactory {
     }
 
     public enum ServiceType {
-        CUSTOMER,ITEM,
+        CUSTOMER,ITEM,ORDER,ORDER_DETAIL
     }
 }
